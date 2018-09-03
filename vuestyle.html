@@ -5,8 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vue Style</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <style>
+        .activated{
+            color:red;
+        }
+    </style>
 </head>
 <body>
-    
+    <div id="app">
+        <!-- <div @click="handleDivClick" :class="[activated]">
+            Hello !!!
+        </div> -->
+        <div :style="[styleObj]" @click = 'handleDivStyle'>
+            hello
+        </div>
+    </div>
+
+
+    <div id="app1">
+        <template v-for="(item,index) of list2" 
+        :key="item.id">
+                <div >{{item.text}}----{{index}}
+                </div>
+
+                <span>
+                    {{item.text}}
+                </span>
+        </template>
+        
+    </div>
+
+    <div id="app2">
+        <div v-for="(item,key,index) of userInfo">
+            {{item}}---{{key}}---{{index}}
+        </div>
+    </div>
+
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                isActivated:false,
+                activated:"",
+                styleObj:{
+                    color:'red'
+                }
+            },
+            methods:{
+                handleDivClick:function(){
+                    
+                 this.activated = this.activated === 'activated'?'' :'activated'  
+                    
+                } ,
+                handleDivStyle:function(){
+                    this.styleObj.color = this.styleObj.color === 'black'?'red':'black'
+                }
+            }
+        })
+
+
+        var v1 = new Vue({
+            el:'#app1',
+            data:{
+                list:['h1','h2','ssss'],
+                list2:[{
+                    id:'1',text:'s1'
+                },{
+                    id:'2',text:'s2'
+                }]
+            }
+        })
+
+        var v2 = new Vue({
+            el:'#app2',
+            data:{
+                userInfo:{
+                    name:'SSS',
+                    age:24,
+                    gender:'male',
+                    salary:'secret'
+                }
+            }
+        })
+    </script>
 </body>
 </html>
