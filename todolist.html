@@ -12,15 +12,36 @@
         <input type="text" v-model="inputValue">
         <button v-on:click="handleBtnClick">submit</button>
         <ul>
-            <li v-for="item in list">{{item}}</li>
-           
+            <!-- <li v-for="item in list">{{item}}</li> -->
+           <todo-item v-bind:content="item" 
+           v-for="(item,index) in list" 
+           v-bind:index="index"
+           @delete="handleItemDelete">
+        </todo-item>
         </ul>
     </div>
 
 
     <script>
+        // Vue.component("TodoItem",{
+        //     props:['content'],
+        //     template:"<li>{{content}}</item"
+        // })
+        var TodoItem = {
+            props:['content','index'],
+            template:"<li v-on:click='handleItemClick'>{{content}}</li>",
+            methods:{
+                handleItemClick:function(){
+                    this.$emit("delete",this.index)
+                }
+            }
+        }
+
         var app = new Vue({
             el:'#app',
+            components:{
+                TodoItem:TodoItem
+            },
             data:{
                 list:['lesson1','lesson2','lesson3'],
                 inputValue:''
@@ -30,6 +51,9 @@
                     this.list.push(this.inputValue);
                     alert(this.inputValue)
                     this.inputValue = ''
+                },
+                handleItemDelete:function(index){
+                    this.list.splice(index,1)
                 }
             }
         })

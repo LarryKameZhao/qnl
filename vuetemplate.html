@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue template</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <div>{{fullName}}</div>
+        
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                firstName:'larry',
+                lastName:'Zhao'
+            },
+            // watch:{
+            //     firstName:function(){
+            //         this.fullName = this.firstName+" "+this.lastName
+            //     },
+            //     lastName:function(){
+            //         this.fullName = this.firstName+ "  "+ this.lastName
+            //     }
+            // },
+            computed:{
+                fullName:{
+                    get:function(){
+                    return this.firstName + " " + this.lastName
+                    },
+                    set:function(value){
+                        var arr = value.split("-")
+                        this.firstName = arr[0]
+                        this.lastName = arr[1];
+                       
+                    }
+                }
+            },
+            methods:{
+                full:function(){
+                    return this.firstName + " " + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+</html>
