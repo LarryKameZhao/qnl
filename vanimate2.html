@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/velocity/2.0.4/velocity.js"></script>
+    <style>
+        .v-enter,.v-leave-to{
+            opacity:0;
+        }
+        .v-enter-active,v-leave-active{
+            transition:opacity 1s;
+        }
+    </style>
+    <title>Vue中多个元素过渡</title>
+</head>
+<body>
+
+    <div id="root">
+        <transition mode="in-out">
+            <component :is="type"></component>
+            
+        </transition>
+        <button @click="handleClick">toogle</button>
+    </div>
+
+
+
+    <script>
+
+        Vue.component('child',{
+            template:'<div>child</div>'
+        })
+
+        Vue.component('child-one',{
+            template:'<div>child-one</div>'
+        })
+
+        var vm = new Vue({
+            el:'#root',
+            data:{
+                type:'child'
+            },
+            methods:{
+                handleClick(){
+                    this.type = this.type === 'child'?'child-one':'child'
+                }
+
+            }
+        })
+
+    </script>
+    
+</body>
+</html>
