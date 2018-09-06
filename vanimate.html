@@ -7,21 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vue中使用animate css库</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/velocity/2.0.4/velocity.js"></script>
     <link href="https://cdn.bootcss.com/animate.css/3.2.2/animate.css" rel="stylesheet">
     <style>
-        .fade-enter{
+        .fade-enter {
             opacity: 0;
         }
-        .fade-leave-to{
-            opacity:0;
+
+        .fade-leave-to {
+            opacity: 0;
         }
+
         .fade-enter-active {
-            transition:1s;
+            transition: 1s;
 
         }
 
         .fade-leave-active {
-            transition:1s;
+            transition: 1s;
         }
     </style>
 </head>
@@ -30,17 +33,20 @@
 
 
     <div id="root">
-        <transition name="fade"
-            :duration="{enter:4000,leave:3000}"
-            type="transition"
-            appear 
-            enter-active-class="animated swing fade-enter-active"
-            leave-active-class="animated shake fade-leave-active"
-            appear-active-class="animated swing"
-            >
+        <!-- <transition name="fade" :duration="{enter:4000,leave:3000}" type="transition" appear enter-active-class="animated swing fade-enter-active"
+            leave-active-class="animated shake fade-leave-active" appear-active-class="animated swing">
             <div v-show="show">hello world</div>
         </transition>
-        <button @click="handleClick">切换</button>
+        <button @click="handleClick">切换</button> -->
+
+        <transition name="fade1" 
+        @before-enter="handleBeforeEnter"
+        @enter="handleEnter"
+        @after-enter="handleAfterEnter"
+        >
+            <div v-show="show">hello sss</div>
+        </transition>
+        <button @click="handleClick">toogle</button>
     </div>
 
     <script>
@@ -52,6 +58,27 @@
             methods: {
                 handleClick() {
                     this.show = !this.show
+                },
+                handleBeforeEnter:function(el){
+                    el.style.opacity = 0;
+                    console.log('before-enter')
+                },
+                handleEnter:function(el,done){
+                    
+                        Velocity(el,
+                        {opacity:1},
+                        {
+                            duration:1000,
+                            complete:done
+                         
+                         
+                         })
+                        
+                  
+                    
+                },
+                handleAfterEnter:function(el){
+                    console.log('finish')
                 }
             }
         })
